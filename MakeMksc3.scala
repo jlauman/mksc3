@@ -11,8 +11,8 @@ object MakeMksc3 {
     val paths = "template"
       .pipe(getFileList)
       .pipe(filterFileList)
-      .sortWith(_.toString.length < _.toString.length)
-    // paths.foreach(file => println(file.toString()))
+      .sortWith(_.toString < _.toString)
+    paths.foreach(file => println(file.toString()))
     val sb = new StringBuilder()
     buildHeader(sb)
     paths.foreach(file => buildFromFile(sb, file))
@@ -30,15 +30,18 @@ object MakeMksc3 {
     List(
       "/build.sbt",
       "/.scalafmt.conf",
+      "/.vscode/launch.json",
       "/project/build.properties",
       "/project/plugins.sbt",
+      "/bin/hello1.sh",
       "/src/main/",
       "/src/test/"
     )
   }
   val filenameFilter = new FilenameFilter {
-    override def accept(file: File, name: String): Boolean =
-      !name.equals("target")
+    override def accept(file: File, name: String): Boolean = {
+      name != "target" && name != ".bloop"
+    }
   }
   def getFileList(path: String): List[File] = {
     val d = new File(path)
