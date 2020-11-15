@@ -80,15 +80,15 @@ lazy val hello1 = (project in file("package/hello1"))
     assemblyJarName in assembly := "hello1.jar"
   )
 
-// lazy val hello3 = (project in file("product/hello3"))
-//   .enablePlugins(ScalaJSPlugin)
-//   .settings(
-//     name := "hello3",
-//     organization := "my-organization",
-//     version := "1.0.0",
-//     commonSettings,
-//     scalaJSUseMainModuleInitializer := true
-//   )
+lazy val hello2 = (project in file("package/hello2"))
+  .enablePlugins(ScalaJSPlugin)
+  .settings(
+    commonSettings,
+    name := "hello2",
+    version := "1.0.0",
+    mainClass in (Compile, run) := Some("Hello2"),
+    scalaJSUseMainModuleInitializer := true
+  )
 
 // lazy val ModuleA = (project in file("product/ModuleA"))
 //   .settings(
@@ -106,6 +106,17 @@ cat << EOF > "${NAME}/package/hello1/src/main/scala/Hello1.scala"
   val count = names.length
   println(s"Hello1: names=${names}")
   println(s"Hello1: count=${count}")
+EOF
+
+mkdir -p "${NAME}/package/hello2/src/main/scala/"
+cat << EOF > "${NAME}/package/hello2/src/main/scala/Hello2.scala"
+object Hello2 {
+  def main(args: Array[String]): Unit = {
+    val count = args.length
+    println(s"Hello2: names=${args.toList}")
+    println(s"Hello2: count=${count}")
+  }
+}
 EOF
 
 mkdir -p "${NAME}/project/"

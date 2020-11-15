@@ -26,15 +26,15 @@ lazy val hello1 = (project in file("package/hello1"))
     assemblyJarName in assembly := "hello1.jar"
   )
 
-// lazy val hello3 = (project in file("product/hello3"))
-//   .enablePlugins(ScalaJSPlugin)
-//   .settings(
-//     name := "hello3",
-//     organization := "my-organization",
-//     version := "1.0.0",
-//     commonSettings,
-//     scalaJSUseMainModuleInitializer := true
-//   )
+lazy val hello2 = (project in file("package/hello2"))
+  .enablePlugins(ScalaJSPlugin)
+  .settings(
+    commonSettings,
+    name := "hello2",
+    version := "1.0.0",
+    mainClass in (Compile, run) := Some("Hello2"),
+    scalaJSUseMainModuleInitializer := true
+  )
 
 // lazy val ModuleA = (project in file("product/ModuleA"))
 //   .settings(
