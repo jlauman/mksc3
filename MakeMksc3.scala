@@ -33,7 +33,7 @@ object MakeMksc3 {
       "/.vscode/launch.json",
       "/project/build.properties",
       "/project/plugins.sbt",
-      "/bin/hello1.sh",
+      "/bin/",
       "/src/main/",
       "/src/test/"
     )
@@ -77,7 +77,7 @@ object MakeMksc3 {
   }
   def buildFromFile(sb: StringBuilder, file: File): Unit = {
     val bufferedSource = Source.fromFile(file, "UTF-8")
-    val contents = bufferedSource.mkString
+    val contents = bufferedSource.mkString.replace("$", "\\$")
     bufferedSource.close()
     val name = file.getName()
     val path = file.toString().replace("template/", "${NAME}/")

@@ -38,16 +38,33 @@ mkdir -p "${NAME}/bin/"
 cat << EOF > "${NAME}/bin/hello1.sh"
 #!/usr/bin/env bash
 # set -x
-XPATH=$(dirname $(readlink -f $0))
-XFILE=${0##*/}
-XBASE=${XFILE%.sh}
-XJAR="${XPATH}/../package/hello1/target/scala-3.0.0-M1/hello1.jar"
-if [ ! -f $XJAR ]; then
-  pushd "${XPATH}/.."
+XPATH=\$(dirname \$(readlink -f \$0))
+XFILE=\${0##*/}
+XBASE=\${XFILE%.sh}
+XJAR="\${XPATH}/../package/hello1/target/scala-3.0.0-M1/hello1.jar"
+if [ ! -f \$XJAR ]; then
+  pushd "\${XPATH}/.."
   sbt hello1/assembly
   popd
 fi
-scala -jar "${XPATH}/../package/hello1/target/scala-3.0.0-M1/hello1.jar" "$@"
+scala -jar "\${XPATH}/../package/hello1/target/scala-3.0.0-M1/hello1.jar" "\$@"
+EOF
+
+mkdir -p "${NAME}/bin/"
+cat << EOF > "${NAME}/bin/hello2.sh"
+#!/usr/bin/env bash
+# set -x
+set -e
+XPATH=\$(dirname \$(readlink -f \$0))
+XFILE=\${0##*/}
+XBASE=\${XFILE%.sh}
+XMAIN="\${XPATH}/../package/hello2/target/scala-3.0.0-M1/hello2-opt/main.js"
+if [ ! -f \$XMAIN ]; then
+  pushd "\${XPATH}/.."
+  sbt hello2/fullLinkJS
+  popd
+fi
+node "\$XMAIN" "\$@"
 EOF
 
 mkdir -p "${NAME}/"
@@ -104,8 +121,8 @@ cat << EOF > "${NAME}/package/hello1/src/main/scala/Hello1.scala"
 
 @main def Hello1(names: String*) =
   val count = names.length
-  println(s"Hello1: names=${names}")
-  println(s"Hello1: count=${count}")
+  println(s"Hello1: names=\${names}")
+  println(s"Hello1: count=\${count}")
 EOF
 
 mkdir -p "${NAME}/package/hello2/src/main/scala/"
@@ -113,8 +130,8 @@ cat << EOF > "${NAME}/package/hello2/src/main/scala/Hello2.scala"
 object Hello2 {
   def main(args: Array[String]): Unit = {
     val count = args.length
-    println(s"Hello2: names=${args.toList}")
-    println(s"Hello2: count=${count}")
+    println(s"Hello2: names=\${args.toList}")
+    println(s"Hello2: count=\${count}")
   }
 }
 EOF
