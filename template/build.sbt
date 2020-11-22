@@ -4,7 +4,7 @@ lazy val commonSettings = Seq(
   libraryDependencies += "org.scalameta" %% "munit" % "0.7.17" % "test",
   testFrameworks += new TestFramework("munit.Framework"),
   test in assembly := {},
-  logBuffered := true,
+  logBuffered := true
 )
 
 // lazy val root = (project in file("."))
@@ -34,6 +34,24 @@ lazy val hello2 = (project in file("package/hello2"))
     version := "1.0.0",
     mainClass in (Compile, run) := Some("Hello2"),
     scalaJSUseMainModuleInitializer := true
+  )
+
+lazy val french_date = (project in file("package/french_date"))
+  .settings(
+    commonSettings,
+    name := "french_date",
+    version := "1.0.0",
+    mainClass in (Compile, run) := Some("FrenchDate")
+  )
+
+lazy val timer = (project in file("package/timer"))
+  .settings(
+    commonSettings,
+    name := "timer",
+    version := "1.0.0",
+    mainClass in (Compile, run) := Some("Timer"),
+    // allow Ctrl+C to stop program
+    fork in run := true
   )
 
 // lazy val ModuleA = (project in file("product/ModuleA"))
