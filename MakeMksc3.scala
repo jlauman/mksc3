@@ -35,7 +35,9 @@ object MakeMksc3 {
       "/project/plugins.sbt",
       "/bin/",
       "/src/main/",
-      "/src/test/"
+      "/src/test/",
+      "/hello3/package.json",
+      "/hello3/main.js",
     )
   }
   val filenameFilter = new FilenameFilter {
