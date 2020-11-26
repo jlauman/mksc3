@@ -1,7 +1,7 @@
 lazy val commonSettings = Seq(
   organization := "jlauman/mksc3",
-  scalaVersion := "3.0.0-M1",
-  libraryDependencies += "org.scalameta" %% "munit" % "0.7.17" % "test",
+  scalaVersion := "3.0.0-M2",
+  libraryDependencies += "org.scalameta" %% "munit" % "0.7.19" % "test",
   testFrameworks += new TestFramework("munit.Framework"),
   test in assembly := {},
   logBuffered := true
@@ -34,6 +34,15 @@ lazy val hello2 = (project in file("package/hello2"))
     version := "1.0.0",
     mainClass in (Compile, run) := Some("Hello2"),
     scalaJSUseMainModuleInitializer := true
+  )
+
+lazy val hello3 = (project in file("package/hello3"))
+  .enablePlugins(ScalaJSPlugin)
+  .settings(
+    commonSettings,
+    name := "hello3",
+    version := "1.0.0",
+    scalaJSLinkerConfig ~= { _.withModuleKind(ModuleKind.ESModule) }
   )
 
 lazy val french_date = (project in file("package/french_date"))
