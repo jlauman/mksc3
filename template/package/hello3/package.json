@@ -14,5 +14,9 @@
     "export"
   ],
   "author": "Jason Lauman",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.1",
+    "morgan": "^1.10.0"
+  }
 }

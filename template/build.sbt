@@ -42,7 +42,20 @@ lazy val hello3 = (project in file("package/hello3"))
     commonSettings,
     name := "hello3",
     version := "1.0.0",
-    scalaJSLinkerConfig ~= { _.withModuleKind(ModuleKind.ESModule) }
+    scalaJSLinkerConfig := {
+      val fastOptJSURI = (artifactPath in (Compile, fastOptJS)).value.toURI
+      scalaJSLinkerConfig.value.withRelativizeSourceMapBase(Some(fastOptJSURI))
+    },
+    scalaJSLinkerConfig in (Compile, fastLinkJS) ~= { cfg =>
+      cfg.withModuleKind(ModuleKind.ESModule)
+      cfg.withOptimizer(false)
+      cfg.withPrettyPrint(true)
+    },
+    scalaJSLinkerConfig in (Compile, fullLinkJS) ~= { cfg =>
+      cfg.withModuleKind(ModuleKind.ESModule)
+      cfg.withOptimizer(true) // turn of optimizer for debugging
+      cfg.withPrettyPrint(false)
+    }
   )
 
 lazy val french_date = (project in file("package/french_date"))

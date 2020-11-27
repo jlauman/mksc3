@@ -1,3 +1,4 @@
+node_modules/
 out/
 target/
 .bsp/
@@ -5,3 +6,6 @@ target/
 .vscode/
 .bloop/
 metals.sbt
+template/package/hello3/web/hello3.js
+template/package/hello3/web/hello3.js.map
+
