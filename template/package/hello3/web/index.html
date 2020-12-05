@@ -8,7 +8,16 @@
 
 <body>
   <p>Open the JavaScript console!</p>
-  <script src="hello3.js"></script>
+  <script>
+    function breakpoint(debug, message) {
+      if (debug) {
+        console.log(message);
+        debugger;
+      }
+      return debug;
+    }
+  </script>
+  <script src="/hello3-fastopt/hello3.js"></script>
   <script>
     console.log('ready!');
     Hello3.hello('world');
